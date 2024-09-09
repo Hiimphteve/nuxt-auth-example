@@ -1,75 +1,48 @@
-# Nuxt 3 Minimal Starter
-
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# NuxtAuth Example
 
 ## Setup
-
-Make sure to install the dependencies:
-
+This example app uses the NuxtAuth module. You can find the docs [here](https://auth.sidebase.io/) for further explanation.
+### Preparing Keycloak
+Start up the docker containers by running
 ```bash
-# npm
-npm install
+docker compose up
+```
+Open your browser and head to [localhost:8080/auth](http://localhost:8080/auth) and sign in with the admin credentials.
+> Username: admin \
+> Password: password
 
-# pnpm
-pnpm install
+Create a new realm and name it "test-realm". \
+Inside the new realm create a new client as shown below and hit "Save" afterward.
+![](docs/create-client-1.png "General Settings")
+![](docs/create-client-2.png "Capability config")
+![](docs/create-client-3.png "Login settings")
+Inside the "Credentials" tab you can find the "Client Secret". You'll need the Client ID and the Client Secret later in this guide.
 
-# yarn
+Now you need to create a user, just name it "user". Head to the "credentials" tab of the user and set a non-temporary password like "password".
+
+And that's it. Now we configure the Nuxt app.
+### Getting the Nuxt app ready
+Install all necessary dependencies
+```bash
+# If you're using yarn
 yarn install
 
-# bun
-bun install
+# If you're using npm
+npm install
 ```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
+Create an .env file in the project root as seen below. You need to paste in the Client Secret from earlier.
+```.dotenv
+NUXT_AUTH_ORIGIN="http://localhost:3000"
+NUXT_AUTH_SECRET="..."
+NUXT_AUTH_KEYCLOAK_CLIENT_ID="my-client"
+NUXT_AUTH_KEYCLOAK_CLIENT_SECRET="..."
+NUXT_AUTH_KEYCLOAK_ISSUER="http://localhost:8080/auth/realms/test-realm"
+```
+Now you can start up the app.
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
+# If you're using yarn
 yarn dev
 
-# bun
-bun run dev
+# If you're using npm
+npm run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

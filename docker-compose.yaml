@@ -1,0 +1,27 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.2
+    container_name: keycloak-nuxt-auth-example
+    command: ['start-dev']
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_SCHEMA: public
+      KC_DB_URL: jdbc:postgresql://postgres/keycloak
+
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: password
+
+      KC_HTTP_RELATIVE_PATH: /auth
+    ports:
+      - "8080:8080" # Externe-Portnummer:Interne-Portnummer
+  postgres:
+    image: postgres
+    container_name: postgres-nuxt-auth-example
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password

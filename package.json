@@ -11,6 +11,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@sidebase/nuxt-auth": "^0.8.2",
+    "next-auth": "4.21.1",
     "nuxt": "^3.12.4",
     "vue": "latest"
   }
